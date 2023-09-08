@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.5
+
+- Fix Ukrainian language code
+
 ## 0.2.4
 
 - Add TubesZB support
