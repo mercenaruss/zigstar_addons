@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3
+
+- Fix bootloader mode for Sonoff ZBDongle-P
+
 ## 0.2.2
 
 - Add support for Sonoff ZBDongle-P
