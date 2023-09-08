@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.4
+
+- Add TubesZB support
+- Add Russian translation
+- Add Ukrainian translation
+- Change BSL Timer
+
 ## 0.2.3
 
 - Fix bootloader mode for Sonoff ZBDongle-P

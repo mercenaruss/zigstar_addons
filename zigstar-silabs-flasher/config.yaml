@@ -11,7 +11,6 @@ arch:
   - armhf
   - armv7
   - i386
-gpio: false
 hassio_api: true
 image: "ghcr.io/mercenaruss/{arch}-addon-zigstar-silabs-flasher"
 init: false
