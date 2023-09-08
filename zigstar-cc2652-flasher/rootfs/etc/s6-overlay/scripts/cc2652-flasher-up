@@ -1,14 +1,12 @@
 #!/usr/bin/with-contenv bashio
 # ==============================================================================
-# Start cc2652-flasher-up
+# Start cc2652p-flasher-up
 # ==============================================================================
 
 set -e
 
-declare autoflash_firmware
 declare device
 declare network_device
-declare device_type
 declare network_device_url
 declare firmware
 declare exit_status
@@ -30,7 +28,7 @@ function exit_no_firmware {
 network_device=$(bashio::config 'network_device')
 network_device_url=$(echo "$network_device" | sed 's/.\{5\}$//')
 
-if bashio::config.true 'device_type'; then
+if bashio::config.true 'usb_mode'; then
     device=$(bashio::config 'device')
 else
     device="socket://${network_device}"
@@ -42,7 +40,19 @@ if bashio::config.true 'trigger_bsl'; then
     sleep 4s
 fi
 
-if bashio::config.has_value 'firmware_url'; then
+if bashio::config.true 'koenk_fw'; then
+    curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20230507.zip"
+    if [ ! -f "/root/firmware.zip" ]; then
+        bashio::log.warning "Downloading last zip failed"
+        exit 0
+    fi
+    unzip -p "/root/firmware.zip" > "/root/firmware.hex"
+    if [ ! -f "/root/firmware.hex" ]; then
+        bashio::log.warning "Unzip firmware.zip failed"
+        exit 0
+    fi
+    firmware="firmware.hex"
+else
     curl --silent -L -o "/root/firmware.zip" "$(bashio::config 'firmware_url')"
     if [ ! -f "/root/firmware.zip" ]; then
         bashio::log.warning "Downloading firmware failed"
@@ -56,10 +66,7 @@ if bashio::config.has_value 'firmware_url'; then
     fi
 
     firmware="firmware.hex"
-else
-    exit_no_firmware
 fi
-
 
 bashio::log.info "Starting cc2652 flasher with ${device}"
 cc1352-flasher.py -p ${device} -evw "/root/${firmware}"

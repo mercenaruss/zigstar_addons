@@ -2,7 +2,7 @@
 
 TI CC2652 Flasher add-on to flash Texas Instruments CC1352/2652 based radios.
 
-By default this add-on flashes the firmware to use Zigbee (Z-Stack Zigbee stack).
+By default this add-on flashes the firmware to use Zigbee (Z-Stack Zigbee Stack).
 
 **NOTE:** Make sure no other add-on or integration is using the zigbee radio. In
 particular disable the Zigbee Home Automation(ZHA) integration or Zigbee2MQTT(Z2M).
