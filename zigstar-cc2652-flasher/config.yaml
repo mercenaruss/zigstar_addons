@@ -1,9 +1,9 @@
 ---
-version: 0.1.0
+version: 0.2.0
 slug: zigstar-cc2652p-flasher
 name: ZigStar TI CC2652P FW Flasher
 description: ZigStar TI CC2652P firmware flasher add-on
-## url: https://mercenaruss/zigstar_addons/tree/master/zigstar-cc2652-flasher/
+url: https://mercenaruss/zigstar_addons/tree/master/zigstar-cc2652-flasher/
 arch:
   - aarch64
   - amd64
@@ -12,7 +12,7 @@ arch:
   - i386
 gpio: false
 hassio_api: true
-## image: "ghcr.io/mercenaruss/{arch}-addon-zigstar-cc2652-flasher"
+image: "ghcr.io/mercenaruss/{arch}-addon-zigstar-cc2652-flasher"
 init: false
 options:
   device: null
