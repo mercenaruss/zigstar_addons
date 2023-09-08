@@ -1,0 +1,27 @@
+---
+configuration:
+  device:
+    name: Device
+    description: The serial port where the Silicon Labs radio is connected to. (Selection Required even if flashing network device)
+  network_device:
+    name: Network Device (Required)
+    description: The ip address and port of your network connected Silicon Labs radio. IP_ADDRESS:PORT (text entry required eve if flashing USB device)
+  bootloader_baudrate:
+    name: Bootloader Baudrate
+    description: >-
+      The serial port baudrate used to communicate with the Silicon Labs radio
+      in bootloader mode.
+  flow_control:
+    name: Hardware flow control
+    description: Enable hardware flow control for serial port.
+  firmware_url:
+    name: Firmware URL
+    description: >-
+      URL for firmware GBL image you wish to flash
+  verbose:
+    name: Verbose mode
+    description: >-
+      Start universal-silabs-flasher in verbose mode.
+  device_type:
+    name: Flash USB Device
+    description: Flash USB device instead of Network Device

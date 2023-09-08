@@ -1,0 +1,65 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Start cc2652-flasher-up
+# ==============================================================================
+
+set -e
+
+declare autoflash_firmware
+declare device
+declare network_device
+declare device_type
+declare network_device_url
+declare firmware
+declare exit_status
+
+function cleanup() {
+    exit_status=$?
+    bashio::log.info "cc2652-flasher-up script exited with code ${exit_status}"
+    echo "${exit_status}" > /run/s6-linux-init-container-results/exitcode
+
+    /run/s6/basedir/bin/halt
+}
+trap cleanup EXIT
+
+function exit_no_firmware {
+    bashio::log.warning "No firmware found for the selected device, assuming firmware is installed."
+    exit 0
+}
+
+network_device=$(bashio::config 'network_device')
+network_device_url=$(echo "$network_device" | sed 's/.\{5\}$//')
+
+if bashio::config.true 'device_type'; then
+    device=$(bashio::config 'device')
+else
+    device="socket://${network_device}"
+fi
+
+if bashio::config.true 'trigger_bsl'; then
+    bashio::log.info "Triggering Bootloader mode on ${network_device_url}"
+    curl --silent -X POST http://${network_device_url}/switch/firmware_update/toggle
+    sleep 4s
+fi
+
+if bashio::config.has_value 'firmware_url'; then
+    curl --silent -L -o "/root/firmware.zip" "$(bashio::config 'firmware_url')"
+    if [ ! -f "/root/firmware.zip" ]; then
+        bashio::log.warning "Downloading firmware failed"
+        exit 0
+    fi
+
+    unzip -p "/root/firmware.zip" > "/root/firmware.hex"
+    if [ ! -f "/root/firmware.hex" ]; then
+        bashio::log.warning "Downloading firmware failed"
+        exit 0
+    fi
+
+    firmware="firmware.hex"
+else
+    exit_no_firmware
+fi
+
+
+bashio::log.info "Starting cc2652 flasher with ${device}"
+cc1352-flasher.py -p ${device} -evw "/root/${firmware}"

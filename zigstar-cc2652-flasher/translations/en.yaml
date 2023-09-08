@@ -1,0 +1,22 @@
+---
+configuration:
+  device:
+    name: Device
+    description: The serial port where the CC2652P radio is connected to.
+  network_device:
+    name: Network Device
+    description: The ip address and port of your network connected CC2652P radio. IP_ADDRESS:PORT
+  flow_control:
+    name: Hardware flow control
+    description: Enable hardware flow control for serial port.
+  firmware_url:
+    name: Firmware URL
+    description: >-
+      URL for firmware zip image you wish to flash
+  trigger_bsl:
+    name: Enable Bootloader mode
+    description: >-
+      Enables the addon to trigger bootloader mode
+  device_type:
+    name: Flash USB Device
+    description: Flash USB device instead of Network Device (Requires you to trigger bootloader mode by holding BSL button while plugging in to USB)
