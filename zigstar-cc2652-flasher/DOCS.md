@@ -25,14 +25,13 @@ serial port (defined by IP address and port) or other USB-based wireless adapter
 
 1. In the add-on configuration enter the IP_ADDRESS:port in the Network Device entry form
 2. Select any serial device to make the form happy
-3. Select to enable the BSL trigger of the bootloader for network coordinators.
-   (note may not work with all ZigStar ESPHome firmware versions versions, If not open the coordinator's
-   web frontend in a browser and trigger the BSL/Bootloader mode there)
-4. Enable Koenk firmware toggle or enter the url for the Z-Stack Firmware - be sure to use the raw GitHub link
+3. Disable USB flashing
+4. Select to enable the BSL trigger of the bootloader for network coordinators.
+5. Enable Koenk firmware toggle or enter the url for the Z-Stack Firmware - be sure to use the raw GitHub link
    example: [copy](https://github.com/Koenkk/Z-Stack-firmware/raw/7398d834eb3a790876c280293c4181da96cc7114/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20221226.zip)
-5. Start the add-on.
-6. Flashing procedure will take 5-6 minutes for network devices
-7. Monitor the flash by going to the addon log page and refreshing periodically.
+6. Start the add-on.
+7. Flashing procedure will take 5-6 minutes for network devices
+8. Monitor the flash by going to the addon log page and refreshing periodically.
 
 # For USB Attached Coordinator
 
