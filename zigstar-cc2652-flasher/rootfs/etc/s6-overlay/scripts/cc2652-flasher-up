@@ -34,12 +34,6 @@ else
     device="socket://${network_device}"
 fi
 
-if bashio::config.true 'trigger_bsl'; then
-    bashio::log.info "Triggering Bootloader mode on ${network_device_url}"
-    curl --silent -X POST http://${network_device_url}/switch/firmware_update/toggle
-    sleep 4s
-fi
-
 if bashio::config.true 'koenk_fw'; then
     curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20230507.zip"
     if [ ! -f "/root/firmware.zip" ]; then
@@ -68,10 +62,17 @@ else
     firmware="firmware.hex"
 fi
 
+if bashio::config.true 'trigger_bsl'; then
+    bashio::log.info "Triggering Bootloader mode on ${network_device_url}"
+    curl --silent -X POST http://${network_device_url}/switch/firmware_update/toggle
+    curl --silent -X POST http://${network_device_url}/button/trigger_zigbee_module_bootloader/press
+    sleep 5s
+fi
+
 if bashio::config.true 'sonoff'; then
-    bashio::log.info "Starting cc2652 flasher with Sonoff ${device}"
+    bashio::log.info "Starting CC2652P flasher with Sonoff ${device}"
     cc1352-flasher.py -p ${device} -evw --bootloader-sonoff-usb "/root/${firmware}"
 else
-    bashio::log.info "Starting cc2652 flasher with ${device}"
+    bashio::log.info "Starting CC2652P flasher with ${device}"
     cc1352-flasher.py -p ${device} -evw "/root/${firmware}"
 fi
