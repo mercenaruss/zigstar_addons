@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1
+
+- Fix addon link
+
 ## 0.2.0
 
 - Added option for last KoenK firmware

@@ -1,10 +1,10 @@
 ---
-version: 0.1.0
+version: 0.1.1
 slug: zigstar-silabs-flasher
 name: ZigStar Silicon Labs FW Flasher
 description: ZigStar Silicon Labs firmware flasher add-on
 url: >
-  https://mercenaruss/zigstar_addons/tree/master/zigstar-silabs-flasher
+  https://github.com/mercenaruss/zigstar_addons/tree/master/zigstar-silabs-flasher
 arch:
   - aarch64
   - amd64
