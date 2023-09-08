@@ -1,5 +1,9 @@
 # Changelog
 
+##
+
+- Add support for Sonoff ZBDongle-P
+
 ## 0.2.1
 
 - Fix addon link

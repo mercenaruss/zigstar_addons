@@ -9,6 +9,9 @@ configuration:
   usb_mode:
     name: Network device/USB device
     description: Enable to flash USB device instead of Network Device (Requires you to trigger bootloader mode by holding BSL button while plugging in to USB)
+  sonoff:
+    name: Sonoff USB
+    description: Enable to flash Sonoff USB device
   koenk_fw:
     name: Last Koenk Firmware
     description: Will download and flash last Koenk firmware

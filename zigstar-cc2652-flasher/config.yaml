@@ -18,6 +18,7 @@ options:
   device: null
   network_device: null
   usb_mode: false
+  sonoff: false
   koenk_fw: true
   firmware_url: ""
   trigger_bsl: true
@@ -25,6 +26,7 @@ schema:
   device: device(subsystem=tty)?
   network_device: str?
   usb_mode: bool?
+  sonoff: bool
   koenk_fw: bool
   firmware_url: str?
   trigger_bsl: bool?

@@ -68,5 +68,10 @@ else
     firmware="firmware.hex"
 fi
 
-bashio::log.info "Starting cc2652 flasher with ${device}"
-cc1352-flasher.py -p ${device} -evw "/root/${firmware}"
+if bashio::config.true 'sonoff'; then
+    bashio::log.info "Starting cc2652 flasher with Sonoff ${device}"
+    cc1352-flasher.py -p ${device} -evw "/root/${firmware}" --bootloader-sonoff-usb
+else
+    bashio::log.info "Starting cc2652 flasher with ${device}"
+    cc1352-flasher.py -p ${device} -evw "/root/${firmware}"
+fi
