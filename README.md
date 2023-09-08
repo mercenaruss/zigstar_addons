@@ -33,6 +33,26 @@ Use the following URL to add this repository:
 https://github.com/mercenaruss/zigstar_addons
 ```
 
+## Contribute
+
+You can contribute to the repo by
+
+- Providing Pull Requests (Features, Proof of Concepts or Fixes)
+- Testing newly released features and reporting issues
+- Contributing on documentation
+
+## Credits
+
+Special thanks goes to all authors of 3rd party libraries which are used in this addons:
+
+- [beagleconnect / cc1352 flasher](https://git.beagleboard.org/beagleconnect/cc1352-flasher)
+- [JelmerT / cc2538-bsl](https://github.com/JelmerT/cc2538-bsl)
+
+People helping to keep the show on the road - **developers and contributors**:
+
+- [@tube0013](https://github.com/tube0013) for initial CC2652 addon release
+- [@home-assistant](https://github.com/home-assistant) for initial release of Silicon Labs Flasher
+
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
