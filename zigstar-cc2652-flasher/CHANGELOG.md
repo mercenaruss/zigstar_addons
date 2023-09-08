@@ -1,6 +1,6 @@
 # Changelog
 
-##
+## 0.2.2
 
 - Add support for Sonoff ZBDongle-P
 
