@@ -13,8 +13,8 @@ configuration:
     name: Sonoff USB
     description: Enable to flash Sonoff USB device
   koenk_fw:
-    name: Last Koenk Firmware
-    description: Will download and flash last Koenk firmware
+    name: Last Koenk Firmware - CC1352P2_CC2652P_launchpad_*.zip
+    description: Will download and flash last Koenk firmware,CC1352P2_CC2652P_launchpad_*.zip
   firmware_url:
     name: Custom Firmware URL
     description: URL for custom firmware image you wish to flash. Please be sure to use the raw GitHub link.

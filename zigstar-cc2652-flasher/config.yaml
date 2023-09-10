@@ -1,5 +1,5 @@
 ---
-version: 0.2.5
+version: 0.2.6
 slug: zigstar-cc2652p-flasher
 name: ZigStar TI CC2652P FW Flasher
 description: ZigStar TI CC2652P firmware flasher add-on
@@ -32,3 +32,4 @@ schema:
 stage: experimental
 startup: once
 boot: manual
+    

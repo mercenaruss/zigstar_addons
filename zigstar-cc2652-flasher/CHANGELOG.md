@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.6
+
+- Add firmware firmware description
+
 ## 0.2.5
 
 - Fix Ukrainian language code
