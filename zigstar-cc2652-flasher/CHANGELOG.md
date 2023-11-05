@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0
+
+- Add CC2652P7 firmware toggle for UZG-01 v0.2 and up.
+- Add CC2652P Others firmware toggle. Used in Ebyte Modules.
+
 ## 0.2.6
 
 - Add firmware firmware description

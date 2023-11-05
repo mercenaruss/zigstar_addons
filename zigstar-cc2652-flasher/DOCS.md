@@ -21,31 +21,27 @@ https://github.com/mercenaruss/zigstar_addons
 The add-on needs a TI CC2652P wireless module accessible through a network
 serial port (defined by IP address and port) or other USB-based wireless adapters.
 
-# For Network connected coordinator:
+# For Network connected coordinators:
 
 1. In the add-on configuration enter the IP_ADDRESS:port in the Network Device entry form
 2. Select any serial device to make the form happy
 3. Disable USB flashing
 4. Select to enable the BSL trigger of the bootloader for network coordinators.
-5. Enable Koenk firmware toggle if you use **launchpad** compatible device or enter the url for the Z-Stack Firmware - be sure to use the raw GitHub link
+5. **Enable required firmware toggle** or enter the url for the Z-Stack Firmware - be sure to use the raw GitHub link
    example: [copy](https://github.com/Koenkk/Z-Stack-firmware/raw/7398d834eb3a790876c280293c4181da96cc7114/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20221226.zip)
 6. Start the add-on.
 7. Flashing procedure will take 5-6 minutes for network devices
 8. Monitor the flash by going to the addon log page and refreshing periodically.
 
-**In this addon default Koenk firmware flashed is CC1352P2_CC2652P_launchpad_coordinator_*.zip**
-
-# For USB Attached Coordinator
+# For USB attached coordinators:
 
 1. In the add-on configuration enter some text into the Network Device entry form to make the form happy
 2. Select the correct serial device from the list of devices detect, Toggle the switch to enable USB Flash
-   (Coordinator must be in bootloader mode before addon is started, hold BSL button while plugging into USB)
-3. Enable Koenk firmware toggle if you use **launchpad** compatible device or enter the url for the Z-Stack Firmware - be sure to use the raw GitHub link
+   (Coordinator must be in bootloader mode before addon is started, hold BSL button while plugging into USB) Not applicable to Sonoff.
+3. **Enable required firmware toggle** or enter the url for the Z-Stack Firmware - be sure to use the raw GitHub link
    example: [copy](https://github.com/Koenkk/Z-Stack-firmware/raw/7398d834eb3a790876c280293c4181da96cc7114/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20221226.zip)
 4. Start the add-on.
 5. Monitor the flash procedure by going to the addon log page, and refreshing periodically.
-
-**In this addon default Koenk firmware flashed is CC1352P2_CC2652P_launchpad_coordinator_*.zip**
 
 ## Configuration
 

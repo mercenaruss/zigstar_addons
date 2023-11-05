@@ -1,24 +1,29 @@
 ---
-    configuration:
-      device:
-        name: Устройство
-        description: Выберите serial port к которому подключен ваш CC2652P координатор.
-      network_device:
-        name: Сетевое устройство
-        description: IP адрес и порт вашего CC2652P координатор. IP_ADDRESS:PORT
-      usb_mode:
-        name: Сеть/USB
-        description: Включить режим прошивки USB-устройства вместо сетевого (требуется активировать режим загрузчика, удерживая кнопку BSL при подключении к USB).
-      sonoff:
-        name: Координатор Sonoff USB ZBDongle P
-        description: Включить режим прошивки Sonoff USB ZBDongle P, не подходит для Sonoff USB ZBDongle E
-      koenk_fw:
-        name: Актуальная прошивка Koenk - CC1352P2_CC2652P_launchpad_*.zip
-        description: Будет загружена и установлена последняя прошивка Koenkm, CC1352P2_CC2652P_launchpad_*.zip
-      firmware_url:
-        name: Выбрать URL файла прошивки
-        description: URL для другого варианта прошивки для вашего координатора. Убедитесь что это прямая ссылка raw на GitHub.
-      trigger_bsl:
-        name: Включить Bootloader mode для сетевого устройства
-        description: Позволяет аддону запускать режим загрузчика на сетевых устройствах.
-    
+configuration:
+  device:
+    name: Устройство
+    description: Выберите serial port к которому подключен ваш CC2652P координатор.
+  network_device:
+    name: Сетевое устройство
+    description: IP адрес и порт вашего CC2652P координатор. IP_ADDRESS:PORT
+  usb_mode:
+    name: Сеть/USB
+    description: Включить режим прошивки USB-устройства вместо сетевого (требуется активировать режим загрузчика, удерживая кнопку BSL при подключении к USB).
+  sonoff:
+    name: Координатор Sonoff USB ZBDongle P
+    description: Включить режим прошивки Sonoff USB ZBDongle P, не подходит для Sonoff USB ZBDongle E
+  launchpad_fw:
+    name: Актуальная прошивка Koenkk - CC1352P2_CC2652P_launchpad_*.zip
+    description: Будет загружена и установлена последняя прошивка Koenkk, CC1352P2_CC2652P_launchpad_*.zip
+  cc1352p7_fw:
+    name: Актуальная прошивка Koenkk - CC1352P7_coordinator_*.zip
+    description: Будет загружена и установлена последняя прошивка Koenkk,CC1352P7_coordinator_*.zip. UZG-01 v0.2+!
+  other_fw:
+    name: Актуальная прошивка Koenkk - CC1352P2_CC2652P_other_*.zip
+    description: Будет загружена и установлена последняя прошивка Koenkk,CC1352P2_CC2652P_other_*.zip. Ebyte
+  firmware_url:
+    name: Выбрать URL файла прошивки
+    description: URL для другого варианта прошивки для вашего координатора. Убедитесь что это прямая ссылка raw на GitHub.
+  trigger_bsl:
+    name: Включить Bootloader mode для сетевого устройства
+    description: Позволяет аддону запускать режим загрузчика на сетевых устройствах.

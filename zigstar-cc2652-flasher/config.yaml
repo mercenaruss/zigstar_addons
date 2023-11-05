@@ -1,8 +1,8 @@
 ---
-version: 0.2.6
+version: 0.3.0
 slug: zigstar-cc2652p-flasher
-name: ZigStar TI CC2652P FW Flasher
-description: ZigStar TI CC2652P firmware flasher add-on
+name: ZigStar TI CC2652P/P7 FW Flasher
+description: ZigStar TI CC2652P/P7 firmware flasher add-on
 url: https://github.com/mercenaruss/zigstar_addons/tree/master/zigstar-cc2652-flasher/
 arch:
   - aarch64
@@ -18,18 +18,21 @@ options:
   network_device: null
   usb_mode: false
   sonoff: false
-  koenk_fw: true
+  launchpad_fw: false
+  cc1352p7_fw: false
+  other_fw: false
   firmware_url: ""
-  trigger_bsl: true
+  trigger_bsl: false
 schema:
   device: device(subsystem=tty)?
   network_device: str?
   usb_mode: bool?
   sonoff: bool
-  koenk_fw: bool
+  launchpad_fw: bool
+  cc1352p7_fw: bool
+  other_fw: bool
   firmware_url: str?
   trigger_bsl: bool?
 stage: experimental
 startup: once
 boot: manual
-    

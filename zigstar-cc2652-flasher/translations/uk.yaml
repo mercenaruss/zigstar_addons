@@ -13,8 +13,14 @@ configuration:
     name: Координатор Sonoff USB ZBDongle P
     description: Увімкнути режим прошивки  Sonoff USB ZBDongle P, не підходить для Sonoff USB ZBDongle E
   koenk_fw:
-    name: Найновіша прошивка Koenk - CC1352P2_CC2652P_launchpad_*.zip
-    description: Буде завантажена та встановлена найновіша прошивка Koenk - CC1352P2_CC2652P_launchpad_*.zip
+    name: Найновіша прошивка Koenkk - CC1352P2_CC2652P_launchpad_*.zip
+    description: Буде завантажена та встановлена найновіша прошивка Koenkk - CC1352P2_CC2652P_launchpad_*.zip
+  cc1352p7_fw:
+    name: Найновіша прошивка Koenkk - CC1352P7_coordinator_*.zip
+    description: Буде завантажена та встановлена найновіша прошивка Koenkk - CC1352P7_coordinator_*.zip. Used in UZG v0.2 and up!
+  other_fw:
+    name: Найновіша прошивка Koenkk - CC1352P2_CC2652P_other_*.zip
+    description: Буде завантажена та встановлена найновіша прошивка Koenkk - CC1352P2_CC2652P_other_*.zip. Used in Ebyte based dongles.
   firmware_url:
     name: Вказати URL файла прошивки
     description: URL для іншого варианту прошивки для вашого координатора. Переконайтесь що це пряме посилання на GitHub.

@@ -16,7 +16,7 @@ This repository contains the following add-ons:
 
 - **[ZigStar TI CC2652 FW Flasher](https://github.com/mercenaruss/zigstar_addons/tree/main/zigstar-cc2652-flasher/README.md)**
 
-  Flash FW to ZigStar TI CC2652 based Coordinators
+  Flash FW to ZigStar TI CC2652P/P7 based Coordinators
 
 - **[ZigStar Silicon Labs FW Flasher](https://github.com/mercenaruss/zigstar_addons/tree/main/zigstar-silabs-flasher/README.md)**
 
