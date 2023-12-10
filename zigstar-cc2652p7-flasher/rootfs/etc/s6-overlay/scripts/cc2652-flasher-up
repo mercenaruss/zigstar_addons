@@ -48,7 +48,7 @@ if bashio::config.true 'coordinator_fw'; then
     fi
     firmware="firmware.hex"
 elif bashio::config.true 'router_fw'; then
-    curl --silent -L -o "/root/firmware.zip" "https://github.com/kolkoo/Z-Stack-firmware/raw/master/router/Z-Stack_3.x.0/bin/CC1352P7_CC2652P7_other_router_20230212_20dbm.zip"
+    curl --silent -L -o "/root/firmware.zip" "https://github.com/mercenaruss/zigstar_gateways/raw/main/files/Firmware/CC1352P7_Router.zip"
     if [ ! -f "/root/firmware.zip" ]; then
         bashio::log.warning "Downloading last zip failed"
         exit 0

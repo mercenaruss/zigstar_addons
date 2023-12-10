@@ -2,6 +2,10 @@
 
 TI CC2652**P7** Flasher add-on to flash Texas Instruments CC1352/2652**P7** based radios.
 
+Especially designed and released for **UZG-01 - v0.2** and up what is using **CC2652P7**
+
+In order to not flash incorrect firmwares.
+
 By default this add-on flashes the firmware to use Zigbee (Z-Stack Zigbee Stack).
 
 **NOTE:** Make sure no other add-on or integration is using the zigbee radio. In

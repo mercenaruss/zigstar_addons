@@ -15,9 +15,6 @@ configuration:
   router_fw:
     name: Router Firmware
     description: Will download and flash last Koenkk router firmware
-  dev_coordinator_fw:
-    name: DEV Coordinator Firmware
-    description: Will download and flash dev coordinator firmware
   firmware_url:
     name: Custom Firmware URL
     description: URL for custom firmware image you wish to flash. Please be sure to use the raw GitHub link.

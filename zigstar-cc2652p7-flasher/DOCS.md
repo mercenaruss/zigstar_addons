@@ -21,7 +21,7 @@ https://github.com/mercenaruss/zigstar_addons
 The add-on needs a TI CC2652P7 wireless module accessible through a network
 serial port (defined by IP address and port) or other USB-based wireless adapters.
 
-# For Network connected coordinators:
+# For flashing over Network:
 
 1. In the add-on configuration enter the IP_ADDRESS:port in the Network Device entry form
 2. Select any serial device to make the form happy
@@ -33,11 +33,11 @@ serial port (defined by IP address and port) or other USB-based wireless adapter
 7. Flashing procedure will take 5-6 minutes for network devices
 8. Monitor the flash by going to the addon log page and refreshing periodically.
 
-# For USB attached coordinators:
+# For flashing over USB:
 
 1. In the add-on configuration enter some text into the Network Device entry form to make the form happy
-2. Select the correct serial device from the list of devices detect, Toggle the switch to enable USB Flash
-   (Coordinator must be in bootloader mode before addon is started, hold BSL button while plugging into USB) Not applicable to Sonoff.
+2. Select the correct serial device from the list of devices detect, Toggle the switch to enable USB Flash on UZG-01
+   (UZG-01 must be in bootloader mode before addon is started - HOLD 4-8 sec Control button to Enable BSL mode)
 3. **Enable required firmware toggle** or enter the url for the Z-Stack Firmware - be sure to use the raw GitHub link
    example: [copy](https://github.com/Koenkk/Z-Stack-firmware/raw/7398d834eb3a790876c280293c4181da96cc7114/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20221226.zip)
 4. Start the add-on.
