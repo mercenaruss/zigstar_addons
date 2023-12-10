@@ -1,0 +1,29 @@
+---
+configuration:
+  device:
+    name: Пристрій
+    description: Оберіть serial port до якого підключено ваш CC2652P7 координатор.
+  network_device:
+    name: Мережевий пристрій
+    description: IP адреса і порт вашого CC2652P7 координатора. IP_ADDRESS:PORT
+  usb_mode:
+    name: Мережа/USB
+    description: Увімкнути режим прошивки USB-пристрою замість мережевого (треба актививувати режим bootloader, утримуючи кнопку BSL при підключенні до USB).
+  sonoff:
+    name: Координатор Sonoff USB ZBDongle P
+    description: Увімкнути режим прошивки  Sonoff USB ZBDongle P, не підходить для Sonoff USB ZBDongle E
+  koenk_fw:
+    name: Найновіша прошивка Koenkk - CC1352P2_CC2652P_launchpad_*.zip
+    description: Буде завантажена та встановлена найновіша прошивка Koenkk - CC1352P2_CC2652P_launchpad_*.zip
+  cc1352p7_fw:
+    name: Найновіша прошивка Koenkk - CC1352P7_coordinator_*.zip
+    description: Буде завантажена та встановлена найновіша прошивка Koenkk - CC1352P7_coordinator_*.zip. Used in UZG v0.2 and up!
+  other_fw:
+    name: Найновіша прошивка Koenkk - CC1352P2_CC2652P_other_*.zip
+    description: Буде завантажена та встановлена найновіша прошивка Koenkk - CC1352P2_CC2652P_other_*.zip. Used in Ebyte based dongles.
+  firmware_url:
+    name: Вказати URL файла прошивки
+    description: URL для іншого варианту прошивки для вашого координатора. Переконайтесь що це пряме посилання на GitHub.
+  trigger_bsl:
+    name: Увімкнути Bootloader mode для мережевого пристрою
+    description: Дозволяє аддону запускати режим bootloader на мережевих пристроях.

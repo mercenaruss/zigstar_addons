@@ -1,0 +1,86 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Start cc2652p7-flasher-up
+# ==============================================================================
+
+set -e
+
+declare device
+declare network_device
+declare network_device_url
+declare firmware
+declare exit_status
+
+function cleanup() {
+    exit_status=$?
+    bashio::log.info "cc2652p7-flasher-up script exited with code ${exit_status}"
+    echo "${exit_status}" > /run/s6-linux-init-container-results/exitcode
+
+    /run/s6/basedir/bin/halt
+}
+trap cleanup EXIT
+
+function exit_no_firmware {
+    bashio::log.warning "No firmware found for the selected device, assuming firmware is installed."
+    exit 0
+}
+
+network_device=$(bashio::config 'network_device')
+network_device_url=$(echo "$network_device" | sed 's/.\{5\}$//')
+
+if bashio::config.true 'usb_mode'; then
+    device=$(bashio::config 'device')
+else
+    device="socket://${network_device}"
+fi
+
+# Firmware choice
+if bashio::config.true 'coordinator_fw'; then
+    curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.x.0/bin/CC1352P7_coordinator_20230507.zip"
+    if [ ! -f "/root/firmware.zip" ]; then
+        bashio::log.warning "Downloading last zip failed"
+        exit 0
+    fi
+    unzip -p "/root/firmware.zip" > "/root/firmware.hex"
+    if [ ! -f "/root/firmware.hex" ]; then
+        bashio::log.warning "Unzip firmware.zip failed"
+        exit 0
+    fi
+    firmware="firmware.hex"
+elif bashio::config.true 'router_fw'; then
+    curl --silent -L -o "/root/firmware.zip" "https://github.com/kolkoo/Z-Stack-firmware/raw/master/router/Z-Stack_3.x.0/bin/CC1352P7_CC2652P7_other_router_20230212_20dbm.zip"
+    if [ ! -f "/root/firmware.zip" ]; then
+        bashio::log.warning "Downloading last zip failed"
+        exit 0
+    fi
+    unzip -p "/root/firmware.zip" > "/root/firmware.hex"
+    if [ ! -f "/root/firmware.hex" ]; then
+        bashio::log.warning "Unzip firmware.zip failed"
+        exit 0
+    fi
+    firmware="firmware.hex"
+else
+    curl --silent -L -o "/root/firmware.zip" "$(bashio::config 'firmware_url')"
+    if [ ! -f "/root/firmware.zip" ]; then
+        bashio::log.warning "Downloading firmware failed"
+        exit 0
+    fi
+
+    unzip -p "/root/firmware.zip" > "/root/firmware.hex"
+    if [ ! -f "/root/firmware.hex" ]; then
+        bashio::log.warning "Downloading firmware failed"
+        exit 0
+    fi
+
+    firmware="firmware.hex"
+fi
+
+if bashio::config.true 'trigger_bsl'; then
+    bashio::log.info "Triggering Bootloader mode on ${network_device_url}"
+    curl --silent -X POST http://${network_device_url}/switch/firmware_update/toggle
+    curl --silent -X POST http://${network_device_url}/button/trigger_zigbee_module_bootloader/press
+    sleep 5s
+fi
+
+bashio::log.info "Starting CC2652P7 flasher with ${device}"
+cc1352-flasher.py -p ${device} -evw "/root/${firmware}"

@@ -1,0 +1,34 @@
+---
+version: 0.1
+slug: zigstar-cc2652p7-flasher
+name: ZigStar TI CC2652P7 FW Flasher
+description: ZigStar TI CC2652P7 firmware flasher add-ons
+url: https://github.com/mercenaruss/zigstar_addons/tree/master/zigstar-cc2652p7-flasher/
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+hassio_api: true
+image: "ghcr.io/mercenaruss/{arch}-addon-zigstar-cc2652p7-flasher"
+init: false
+options:
+  device: null
+  network_device: null
+  usb_mode: false
+  coordinator_fw: false
+  router_fw: false
+  firmware_url: ""
+  trigger_bsl: false
+schema:
+  device: device(subsystem=tty)?
+  network_device: str?
+  usb_mode: bool?
+  coordinator_fw: bool
+  router_fw: bool
+  firmware_url: str?
+  trigger_bsl: bool?
+stage: experimental
+startup: once
+boot: manual

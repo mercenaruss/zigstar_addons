@@ -1,0 +1,26 @@
+---
+configuration:
+  device:
+    name: Device
+    description: The serial port where the CC2652P7 radio is connected to.
+  network_device:
+    name: Network Device
+    description: The ip address and port of your network connected CC2652P7 radio. IP_ADDRESS:PORT
+  usb_mode:
+    name: Network device/USB device
+    description: Enable to flash USB device instead of Network Device (Requires you to trigger bootloader mode by holding BSL button while plugging in to USB)
+  coordinator_fw:
+    name: Coordinator Firmware
+    description: Will download and flash last Koenkk coordinator firmware
+  router_fw:
+    name: Router Firmware
+    description: Will download and flash last Koenkk router firmware
+  dev_coordinator_fw:
+    name: DEV Coordinator Firmware
+    description: Will download and flash dev coordinator firmware
+  firmware_url:
+    name: Custom Firmware URL
+    description: URL for custom firmware image you wish to flash. Please be sure to use the raw GitHub link.
+  trigger_bsl:
+    name: Enable Bootloader mode for Network Device
+    description: Enables the addon to trigger bootloader mode on Network Devices.Disable in case USB mode is used.
