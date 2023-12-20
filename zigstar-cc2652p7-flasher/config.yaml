@@ -1,5 +1,5 @@
 ---
-version: 0.1.0
+version: 0.2.0
 slug: zigstar-cc2652p7-flasher
 name: ZigStar TI CC2652P7 FW Flasher
 description: ZigStar TI CC2652P7 firmware flasher addon for UZG-01

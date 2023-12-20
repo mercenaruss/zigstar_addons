@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+
+- Increased the chip flashing speed by 5 to 10 times compared to previous versions
+
 ## 0.3.0
 
 - Add CC2652P7 firmware toggle for UZG-01 v0.2 and up.
