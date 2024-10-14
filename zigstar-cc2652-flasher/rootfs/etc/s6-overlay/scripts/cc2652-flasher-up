@@ -36,7 +36,7 @@ fi
 
 # Firmware choice
 if bashio::config.true 'launchpad_fw'; then
-    curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20230507.zip"
+    curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/refs/heads/master/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20240710.zip"
     if [ ! -f "/root/firmware.zip" ]; then
         bashio::log.warning "Downloading last zip failed"
         exit 0
@@ -48,7 +48,7 @@ if bashio::config.true 'launchpad_fw'; then
     fi
     firmware="firmware.hex"
 elif bashio::config.true 'cc1352p7_fw'; then
-    curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.x.0/bin/CC1352P7_coordinator_20230507.zip"
+    curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/refs/heads/master/coordinator/Z-Stack_3.x.0/bin/CC1352P7_coordinator_20240710.zip"
     if [ ! -f "/root/firmware.zip" ]; then
         bashio::log.warning "Downloading last zip failed"
         exit 0
@@ -60,7 +60,7 @@ elif bashio::config.true 'cc1352p7_fw'; then
     fi
     firmware="firmware.hex"
 elif bashio::config.true 'other_fw'; then
-    curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_other_coordinator_20230507.zip"
+    curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/refs/heads/master/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_other_coordinator_20240710.zip"
     if [ ! -f "/root/firmware.zip" ]; then
         bashio::log.warning "Downloading last zip failed"
         exit 0

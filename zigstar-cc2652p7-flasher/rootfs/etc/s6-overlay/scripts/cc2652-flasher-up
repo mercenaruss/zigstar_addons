@@ -36,7 +36,7 @@ fi
 
 # Firmware choice
 if bashio::config.true 'coordinator_fw'; then
-    curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.x.0/bin/CC1352P7_coordinator_20230507.zip"
+    curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/refs/heads/master/coordinator/Z-Stack_3.x.0/bin/CC1352P7_coordinator_20240710.zip"
     if [ ! -f "/root/firmware.zip" ]; then
         bashio::log.warning "Downloading last zip failed"
         exit 0
