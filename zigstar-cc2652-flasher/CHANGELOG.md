@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+- Minor upgrade
+
 ## 0.4.0
 
 - Increased the chip flashing speed by 5 to 10 times compared to previous versions
