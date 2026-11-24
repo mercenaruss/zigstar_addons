@@ -33,6 +33,5 @@ schema:
   trigger_bsl: bool?
   write_ieee: bool?
   ieee: match(^([0-9A-Fa-f]{2}:){7}[0-9A-Fa-f]{2}$)?
-stage: stable
 startup: once
 boot: manual

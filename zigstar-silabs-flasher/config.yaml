@@ -25,6 +25,5 @@ schema:
   firmware_url: str?
   bootloader_baudrate: list(57600|115200|230400|460800|921600)
   verbose: bool?
-stage: stable
 startup: once
 boot: manual

@@ -6,7 +6,6 @@
 - Quote shell variables and use a temporary working directory
 - Move base image to Python 3.13 / Alpine 3.22
 - Add Russian and Ukrainian translations
-- Mark add-on as stable
 - Add AppArmor profile
 - **Breaking:** the `armhf`, `armv7` and `i386` architectures are no longer supported; only `amd64` and `aarch64` are built
 - Move base image into the Dockerfile
