@@ -9,7 +9,9 @@
 - Add AppArmor profile
 - **Breaking:** the `armhf`, `armv7` and `i386` architectures are no longer supported; only `amd64` and `aarch64` are built
 - Move base image into the Dockerfile
+- Fix "Missing required option" when saving a network-only configuration (no default `null` options)
 - Fix repository links (`main` branch) and documentation
+- Add optional IEEE address writing (`write_ieee`, `ieee`)
 - Remove unused `flow_control` option and fix `firmware_url` default
 - Fix `BUILD_ARCH` build argument in Dockerfile
 

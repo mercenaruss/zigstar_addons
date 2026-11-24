@@ -54,6 +54,7 @@ Add-on configuration:
 | usb_mode                | Flash a USB device instead of a network one   |
 | write_ieee              | Write a custom IEEE address to the device     |
 | ieee                    | IEEE address, format `00:12:4b:aa:bb:cc:dd:ee` |
+| baudrate (optional)      | Serial baudrate for the bootloader (default 500000; use 115200 for direct UART modules) |
 | trigger_bsl             | Trigger bootloader mode on network devices    |
 | coordinator_fw / router_fw | Flash the matching built-in firmware        |
 | firmware_url (optional) | Custom URL to flash firmware from             |

@@ -12,12 +12,11 @@ hassio_api: true
 image: "ghcr.io/mercenaruss/{arch}-addon-zigstar-silabs-flasher"
 init: false
 options:
-  network_device: null
-  device: null
   device_type: false
   firmware_url: ""
   bootloader_baudrate: "115200"
   verbose: false
+  write_ieee: false
 schema:
   network_device: str?
   device: device(subsystem=tty)?
@@ -25,5 +24,7 @@ schema:
   firmware_url: str?
   bootloader_baudrate: list(57600|115200|230400|460800|921600)
   verbose: bool?
+  write_ieee: bool?
+  ieee: match(^([0-9A-Fa-f]{2}:){7}[0-9A-Fa-f]{2}$)?
 startup: once
 boot: manual

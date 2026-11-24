@@ -55,6 +55,7 @@ Add-on configuration:
 | sonoff                  | Use the Sonoff USB bootloader sequence        |
 | write_ieee              | Write a custom IEEE address to the device     |
 | ieee                    | IEEE address, format `00:12:4b:aa:bb:cc:dd:ee` |
+| baudrate (optional)      | Serial baudrate for the bootloader (default 500000; use 115200 for direct UART modules) |
 | trigger_bsl             | Trigger bootloader mode on network devices    |
 | launchpad_fw / cc1352p7_fw / other_fw | Flash the matching Koenkk firmware |
 | firmware_url (optional) | Custom URL to flash firmware from             |

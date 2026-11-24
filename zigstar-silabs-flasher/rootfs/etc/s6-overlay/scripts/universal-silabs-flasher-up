@@ -35,23 +35,37 @@ fi
 
 bootloader_baudrate=$(bashio::config 'bootloader_baudrate')
 
-if ! bashio::config.has_value 'firmware_url'; then
+declare ieee=""
+declare firmware_url=""
+
+if bashio::config.true 'write_ieee'; then
+    ieee=$(bashio::config 'ieee')
+    if [[ ! "${ieee}" =~ ^([0-9A-Fa-f]{2}:){7}[0-9A-Fa-f]{2}$ ]]; then
+        bashio::log.error "Invalid IEEE address '${ieee}', expected format 00:12:4b:aa:bb:cc:dd:ee"
+        exit 1
+    fi
+fi
+
+if bashio::config.has_value 'firmware_url'; then
+    firmware_url=$(bashio::config 'firmware_url')
+elif [ -z "${ieee}" ]; then
     bashio::log.error "No firmware URL provided"
     exit 1
 fi
 
-firmware_url=$(bashio::config 'firmware_url')
-bashio::log.info "Downloading firmware from ${firmware_url}"
-if ! curl --silent --show-error --fail --location \
-        --proto '=https' --retry 3 --max-time 120 \
-        -o "${workdir}/firmware.gbl" "${firmware_url}"; then
-    bashio::log.error "Downloading firmware failed"
-    exit 1
-fi
+if [ -n "${firmware_url}" ]; then
+    bashio::log.info "Downloading firmware from ${firmware_url}"
+    if ! curl --silent --show-error --fail --location \
+            --proto '=https' --retry 3 --max-time 120 \
+            -o "${workdir}/firmware.gbl" "${firmware_url}"; then
+        bashio::log.error "Downloading firmware failed"
+        exit 1
+    fi
 
-if [ ! -s "${workdir}/firmware.gbl" ]; then
-    bashio::log.error "Downloaded firmware is empty"
-    exit 1
+    if [ ! -s "${workdir}/firmware.gbl" ]; then
+        bashio::log.error "Downloaded firmware is empty"
+        exit 1
+    fi
 fi
 
 flasher_args=()
@@ -60,6 +74,17 @@ if bashio::config.true 'verbose'; then
 fi
 flasher_args+=(--device "${device}" --bootloader-baudrate "${bootloader_baudrate}")
 
-bashio::log.info "Starting universal-silabs-flasher with ${device} (bootloader baudrate ${bootloader_baudrate})"
-universal-silabs-flasher "${flasher_args[@]}" \
-    flash --force --firmware "${workdir}/firmware.gbl"
+if [ -n "${firmware_url}" ]; then
+    bashio::log.info "Starting universal-silabs-flasher with ${device} (bootloader baudrate ${bootloader_baudrate})"
+    universal-silabs-flasher "${flasher_args[@]}" \
+        flash --force --firmware "${workdir}/firmware.gbl"
+fi
+
+if [ -n "${ieee}" ]; then
+    if [ -n "${firmware_url}" ]; then
+        # Give the adapter time to restart into the freshly flashed firmware
+        sleep 5s
+    fi
+    bashio::log.info "Writing IEEE address ${ieee} to ${device}"
+    universal-silabs-flasher "${flasher_args[@]}" write-ieee --ieee "${ieee}"
+fi

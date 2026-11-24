@@ -91,6 +91,11 @@ if bashio::config.true 'trigger_bsl'; then
     sleep 5s
 fi
 
+declare -a baud_args=()
+if bashio::config.has_value 'baudrate'; then
+    baud_args=(-b "$(bashio::config 'baudrate')")
+fi
+
 declare -a ieee_args=()
 if bashio::config.true 'write_ieee'; then
     ieee=$(bashio::config 'ieee')
@@ -103,4 +108,4 @@ if bashio::config.true 'write_ieee'; then
 fi
 
 bashio::log.info "Starting CC2652P7 flasher with ${device}${ieee_log_suffix}"
-cc1352-flasher.py -p "${device}" -evw "${ieee_args[@]}" "${workdir}/firmware.hex"
+cc1352-flasher.py -p "${device}" -evw "${baud_args[@]}" "${ieee_args[@]}" "${workdir}/firmware.hex"

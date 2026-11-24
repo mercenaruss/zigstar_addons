@@ -33,3 +33,6 @@ configuration:
   ieee:
     name: IEEE address
     description: Desired IEEE address in 00:12:4b:aa:bb:cc:dd:ee format
+  baudrate:
+    name: Baudrate
+    description: Serial baudrate used to talk to the bootloader. Leave empty for the default (500000). Use 115200 for modules wired directly to a UART.

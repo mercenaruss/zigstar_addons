@@ -11,8 +11,6 @@ hassio_api: true
 image: "ghcr.io/mercenaruss/{arch}-addon-zigstar-cc2652p7-flasher"
 init: false
 options:
-  device: null
-  network_device: null
   usb_mode: false
   coordinator_fw: false
   router_fw: false
@@ -27,6 +25,7 @@ schema:
   router_fw: bool
   firmware_url: str?
   trigger_bsl: bool?
+  baudrate: list(115200|230400|460800|500000|921600)?
   write_ieee: bool?
   ieee: match(^([0-9A-Fa-f]{2}:){7}[0-9A-Fa-f]{2}$)?
 startup: once

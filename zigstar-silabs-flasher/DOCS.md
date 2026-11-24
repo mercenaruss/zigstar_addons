@@ -46,6 +46,8 @@ Add-on configuration:
 | device_type        | Enable to flash a USB device instead of a network device |
 | bootloader_baudrate | Serial port baudrate used in bootloader mode (depends on firmware) |
 | firmware_url       | URL of the .gbl firmware to flash                      |
+| write_ieee         | Write a custom IEEE address (can be done without a firmware URL, but only once per adapter) |
+| ieee               | IEEE address, format `00:12:4b:aa:bb:cc:dd:ee`         |
 | verbose            | Run the flasher in verbose mode                        |
 
 ## Support

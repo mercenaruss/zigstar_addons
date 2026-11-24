@@ -22,3 +22,9 @@ configuration:
   device_type:
     name: Прошивка USB-устройства
     description: Прошивать USB-устройство вместо сетевого
+  write_ieee:
+    name: Записать другой IEEE-адрес в устройство
+    description: Включите и укажите нужный IEEE-адрес ниже. Его можно записать только один раз для каждого адаптера.
+  ieee:
+    name: IEEE-адрес
+    description: Нужный IEEE-адрес в формате 00:12:4b:aa:bb:cc:dd:ee

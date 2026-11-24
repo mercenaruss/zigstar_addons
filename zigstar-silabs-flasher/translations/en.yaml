@@ -22,3 +22,9 @@ configuration:
   device_type:
     name: Flash USB Device
     description: Flash USB device instead of Network Device
+  write_ieee:
+    name: Write a different IEEE address to a device
+    description: Enable and fill in the desired IEEE address below. It can be written only once per adapter.
+  ieee:
+    name: IEEE address
+    description: Desired IEEE address in 00:12:4b:aa:bb:cc:dd:ee format
