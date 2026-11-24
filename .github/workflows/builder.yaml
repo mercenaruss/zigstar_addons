@@ -93,6 +93,8 @@ jobs:
           HEAD_REF: ${{ github.head_ref }}
           EVENT_NAME: ${{ github.event_name }}
         run: |
+          # The info action returns the value with its YAML quotes; drop them
+          IMAGE="${IMAGE//\"/}"
           if [[ "${IMAGE}" == "null" ]]; then
             echo "Image property is not defined, skipping build"
             echo "build_arch=false" >> "$GITHUB_OUTPUT"
