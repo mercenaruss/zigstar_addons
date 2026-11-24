@@ -28,7 +28,7 @@ serial port (defined by IP address and port) or other USB-based wireless adapter
 3. Disable USB flashing
 4. Select to enable the BSL trigger of the bootloader for network coordinators.
 5. **Enable required firmware toggle** or enter the url for the Z-Stack Firmware - be sure to use the raw GitHub link
-   example: [copy](https://github.com/Koenkk/Z-Stack-firmware/raw/7398d834eb3a790876c280293c4181da96cc7114/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20221226.zip)
+   example: [copy](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20240710.zip)
 6. Start the add-on.
 7. Flashing procedure will take 5-6 minutes for network devices
 8. Monitor the flash by going to the addon log page and refreshing periodically.
@@ -39,7 +39,7 @@ serial port (defined by IP address and port) or other USB-based wireless adapter
 2. Select the correct serial device from the list of devices detect, Toggle the switch to enable USB Flash
    (Coordinator must be in bootloader mode before addon is started, hold BSL button while plugging into USB) Not applicable to Sonoff.
 3. **Enable required firmware toggle** or enter the url for the Z-Stack Firmware - be sure to use the raw GitHub link
-   example: [copy](https://github.com/Koenkk/Z-Stack-firmware/raw/7398d834eb3a790876c280293c4181da96cc7114/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20221226.zip)
+   example: [copy](https://github.com/Koenkk/Z-Stack-firmware/raw/master/coordinator/Z-Stack_3.x.0/bin/CC1352P2_CC2652P_launchpad_coordinator_20240710.zip)
 4. Start the add-on.
 5. Monitor the flash procedure by going to the addon log page, and refreshing periodically.
 
@@ -51,12 +51,14 @@ Add-on configuration:
 | ----------------------- | --------------------------------------------- |
 | device                  | Serial service where the TI radio is attached |
 | network_device          | Network Serial port (IP_ADDRESS:PORT)         |
+| usb_mode                | Flash a USB device instead of a network one   |
+| sonoff                  | Use the Sonoff USB bootloader sequence        |
+| write_ieee              | Write a custom IEEE address to the device     |
+| ieee                    | IEEE address, format `00:12:4b:aa:bb:cc:dd:ee` |
+| trigger_bsl             | Trigger bootloader mode on network devices    |
+| launchpad_fw / cc1352p7_fw / other_fw | Flash the matching Koenkk firmware |
 | firmware_url (optional) | Custom URL to flash firmware from             |
 
 ## Support
 
-Got questions?
-
-```
-
-```
+Got questions? Open an issue at https://github.com/mercenaruss/zigstar_addons/issues

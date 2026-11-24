@@ -5,3 +5,13 @@ updates:
     schedule:
       interval: weekly
       time: "06:00"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: weekly
+      time: "06:00"

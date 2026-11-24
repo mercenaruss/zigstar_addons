@@ -1,9 +1,9 @@
 ---
-version: 0.4.1
+version: 0.4.2
 slug: zigstar-cc2652p-flasher
 name: ZigStar TI CC2652P/P7 FW Flasher
 description: ZigStar TI CC2652P/P7 firmware flasher add-on
-url: https://github.com/mercenaruss/zigstar_addons/tree/master/zigstar-cc2652-flasher/
+url: https://github.com/mercenaruss/zigstar_addons/tree/main/zigstar-cc2652-flasher/
 arch:
   - aarch64
   - amd64
@@ -23,6 +23,7 @@ options:
   other_fw: false
   firmware_url: ""
   trigger_bsl: false
+  write_ieee: false
 schema:
   device: device(subsystem=tty)?
   network_device: str?
@@ -33,6 +34,8 @@ schema:
   other_fw: bool
   firmware_url: str?
   trigger_bsl: bool?
-stage: experimental
+  write_ieee: bool?
+  ieee: match(^([0-9A-Fa-f]{2}:){7}[0-9A-Fa-f]{2}$)?
+stage: stable
 startup: once
 boot: manual

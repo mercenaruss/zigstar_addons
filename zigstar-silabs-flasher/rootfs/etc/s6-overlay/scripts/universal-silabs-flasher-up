@@ -5,32 +5,25 @@
 
 set -e
 
-declare autoflash_firmware
 declare device
 declare network_device
-declare device_type
 declare bootloader_baudrate
-declare firmware
-declare verbose
-declare usb_device_path
-declare usb_manufacturer
-declare usb_product
-declare gpio_reset_flag
+declare firmware_url
+declare workdir
 declare exit_status
+declare -a flasher_args
+
+workdir=$(mktemp -d)
 
 function cleanup() {
     exit_status=$?
+    rm -rf "${workdir}"
     bashio::log.info "universal-silabs-flasher-up script exited with code ${exit_status}"
     echo "${exit_status}" > /run/s6-linux-init-container-results/exitcode
 
     /run/s6/basedir/bin/halt
 }
 trap cleanup EXIT
-
-function exit_no_firmware {
-    bashio::log.warning "No firmware found for the selected device, assuming firmware is installed."
-    exit 0
-}
 
 network_device=$(bashio::config 'network_device')
 
@@ -42,26 +35,31 @@ fi
 
 bootloader_baudrate=$(bashio::config 'bootloader_baudrate')
 
-if bashio::config.has_value 'firmware_url'; then
-    curl --silent -L -o "/root/firmware.gbl" "$(bashio::config 'firmware_url')"
-    if [ ! -f "/root/firmware.gbl" ]; then
-        bashio::log.warning "Downloading firmware failed"
-        exit 0
-    fi
-
-    firmware="firmware.gbl"
-else
-    exit_no_firmware
+if ! bashio::config.has_value 'firmware_url'; then
+    bashio::log.error "No firmware URL provided"
+    exit 1
 fi
 
-verbose=""
+firmware_url=$(bashio::config 'firmware_url')
+bashio::log.info "Downloading firmware from ${firmware_url}"
+if ! curl --silent --show-error --fail --location \
+        --proto '=https' --retry 3 --max-time 120 \
+        -o "${workdir}/firmware.gbl" "${firmware_url}"; then
+    bashio::log.error "Downloading firmware failed"
+    exit 1
+fi
+
+if [ ! -s "${workdir}/firmware.gbl" ]; then
+    bashio::log.error "Downloaded firmware is empty"
+    exit 1
+fi
+
+flasher_args=()
 if bashio::config.true 'verbose'; then
-    verbose="-v"
+    flasher_args+=("-v")
 fi
+flasher_args+=(--device "${device}" --bootloader-baudrate "${bootloader_baudrate}")
 
 bashio::log.info "Starting universal-silabs-flasher with ${device} (bootloader baudrate ${bootloader_baudrate})"
-universal-silabs-flasher ${verbose} --device ${device} \
-     --bootloader-baudrate "${bootloader_baudrate}" \
-     flash --force --firmware "/root/${firmware}"
-
-
+universal-silabs-flasher "${flasher_args[@]}" \
+    flash --force --firmware "${workdir}/firmware.gbl"

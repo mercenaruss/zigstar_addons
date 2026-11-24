@@ -15,7 +15,7 @@ particular disable the Zigbee Home Automation(ZHA) integration or Zigbee2MQTT(Z2
 
 ## About
 
-This add-on allows you to flash firmwares using the the [cc1352-flasher](https://git.beagleboard.org/beagleconnect/cc1352-flasher)
+This add-on allows you to flash firmwares using the [cc1352-flasher](https://git.beagleboard.org/beagleconnect/cc1352-flasher)
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg

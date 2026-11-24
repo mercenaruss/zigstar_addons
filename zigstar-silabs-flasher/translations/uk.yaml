@@ -1,0 +1,24 @@
+---
+configuration:
+  device:
+    name: Пристрій
+    description: Послідовний порт, до якого підключено радіомодуль Silicon Labs. (Вибір обов'язковий, навіть при прошивці мережевого пристрою)
+  network_device:
+    name: Мережевий пристрій (обов'язково)
+    description: IP-адреса і порт вашого мережевого радіомодуля Silicon Labs. IP_ADDRESS:PORT (введення обов'язкове, навіть при прошивці USB-пристрою)
+  bootloader_baudrate:
+    name: Швидкість завантажувача
+    description: >-
+      Швидкість послідовного порту для зв'язку з радіомодулем Silicon Labs
+      у режимі завантажувача.
+  firmware_url:
+    name: URL прошивки
+    description: >-
+      URL файлу прошивки GBL, який ви хочете встановити
+  verbose:
+    name: Докладний режим
+    description: >-
+      Запустити universal-silabs-flasher у докладному режимі.
+  device_type:
+    name: Прошивка USB-пристрою
+    description: Прошивати USB-пристрій замість мережевого

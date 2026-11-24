@@ -13,11 +13,17 @@ configuration:
     name: Найновіша прошивка Koenkk - CC1352P7_coordinator_*.zip
     description: Буде завантажена та встановлена найновіша прошивка Koenkk - CC1352P7_coordinator_*.zip. Used in UZG v0.2 and up!
   router_fw:
-    name: Найновіша прошивка Koenkk - CC1352P2_CC2652P_other_*.zip
-    description: Буде завантажена та встановлена найновіша прошивка Koenkk - CC1352P2_CC2652P_other_*.zip. Used in Ebyte based dongles.
+    name: Прошивка Router
+    description: Буде завантажена та встановлена прошивка Router для CC1352P7.
   firmware_url:
     name: Вказати URL файла прошивки
     description: URL для іншого варианту прошивки для вашого координатора. Переконайтесь що це пряме посилання на GitHub.
   trigger_bsl:
     name: Увімкнути Bootloader mode для мережевого пристрою
     description: Дозволяє аддону запускати режим bootloader на мережевих пристроях.
+  write_ieee:
+    name: Записати інший IEEE-адрес у пристрій
+    description: Увімкніть і вкажіть потрібний IEEE-адрес нижче
+  ieee:
+    name: IEEE-адрес
+    description: Потрібний IEEE-адрес у форматі 00:12:4b:aa:bb:cc:dd:ee

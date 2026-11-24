@@ -1,10 +1,10 @@
 ---
-version: 0.1.1
+version: 0.1.2
 slug: zigstar-silabs-flasher
 name: ZigStar Silicon Labs FW Flasher
 description: ZigStar Silicon Labs firmware flasher add-on
 url: >
-  https://github.com/mercenaruss/zigstar_addons/tree/master/zigstar-silabs-flasher
+  https://github.com/mercenaruss/zigstar_addons/tree/main/zigstar-silabs-flasher
 arch:
   - aarch64
   - amd64
@@ -18,9 +18,8 @@ options:
   network_device: null
   device: null
   device_type: false
-  firmware_url: str?
+  firmware_url: ""
   bootloader_baudrate: "115200"
-  flow_control: false
   verbose: false
 schema:
   network_device: str?
@@ -28,8 +27,7 @@ schema:
   device_type: bool?
   firmware_url: str?
   bootloader_baudrate: list(57600|115200|230400|460800|921600)
-  flow_control: bool?
   verbose: bool?
-stage: experimental
+stage: stable
 startup: once
 boot: manual

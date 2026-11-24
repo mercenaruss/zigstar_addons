@@ -1,0 +1,39 @@
+#include <tunables/global>
+
+profile zigstar_cc2652p7_flasher flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  # Capabilities
+  capability,
+  file,
+  network,
+  signal (send) set=(kill,term,int,hup,cont),
+
+  # S6-Overlay
+  /init ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
+  /etc/s6-overlay/** rwix,
+  /run/{,**} rwk,
+  /dev/tty rw,
+
+  # Serial adapters used for flashing
+  /dev/tty* rw,
+  /dev/serial/** r,
+  /dev/bus/usb/** rw,
+
+  # Bashio
+  /usr/lib/bashio/** ix,
+  /tmp/** rwk,
+
+  # Add-on options and working files
+  /data/** rw,
+  /root/** rw,
+
+  # Deny dangerous operations
+  deny mount,
+  deny ptrace,
+}
