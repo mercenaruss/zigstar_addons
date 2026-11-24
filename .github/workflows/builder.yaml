@@ -117,7 +117,7 @@ jobs:
 
       - name: Build ${{ matrix.addon }} add-on
         if: steps.check.outputs.build_arch == 'true'
-        uses: home-assistant/builder@a60da4f9075353679f2d9f5d708526e2403144dd # 2024.08.2
+        uses: home-assistant/builder@2024.08.2 # tag, not SHA: the action derives its image tag from this ref
         with:
           args: |
             ${{ env.BUILD_ARGS }} \
