@@ -1,4 +1,4 @@
-FROM ghcr.io/home-assistant/base-python:3.13-alpine3.22
+FROM ghcr.io/home-assistant/base-python:3.15-alpine3.22
 
 ARG BUILD_ARCH
 ARG UNIVERSAL_SILABS_FLASHER=0.0.13
