@@ -1,4 +1,4 @@
-FROM ghcr.io/home-assistant/base-python:3.13-alpine3.22
+FROM ghcr.io/home-assistant/base-python:3.15-alpine3.22
 
 # cc1352-flasher is pinned to a specific commit for reproducible builds.
 RUN \
