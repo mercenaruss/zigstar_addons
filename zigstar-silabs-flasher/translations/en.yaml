@@ -5,15 +5,12 @@ configuration:
     description: The serial port where the Silicon Labs radio is connected to. (Selection Required even if flashing network device)
   network_device:
     name: Network Device (Required)
-    description: The ip address and port of your network connected Silicon Labs radio. IP_ADDRESS:PORT (text entry required eve if flashing USB device)
+    description: The ip address and port of your network connected Silicon Labs radio. IP_ADDRESS:PORT (text entry required even if flashing USB device)
   bootloader_baudrate:
     name: Bootloader Baudrate
     description: >-
       The serial port baudrate used to communicate with the Silicon Labs radio
       in bootloader mode.
-  flow_control:
-    name: Hardware flow control
-    description: Enable hardware flow control for serial port.
   firmware_url:
     name: Firmware URL
     description: >-
@@ -25,3 +22,9 @@ configuration:
   device_type:
     name: Flash USB Device
     description: Flash USB device instead of Network Device
+  write_ieee:
+    name: Write a different IEEE address to a device
+    description: Enable and fill in the desired IEEE address below. It can be written only once per adapter.
+  ieee:
+    name: IEEE address
+    description: Desired IEEE address in 00:12:4b:aa:bb:cc:dd:ee format

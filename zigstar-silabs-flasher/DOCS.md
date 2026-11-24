@@ -15,21 +15,21 @@ Or, in your Home Assistant, navigate to _Configuration_ > _Add-ons, Backups & Su
 ## How to use
 
 The add-on needs a Silicon Labs based wireless module accessible through a network
-serial port defined by IP addres and port or other USB based wireless adapters.
+serial port defined by IP address and port or other USB based wireless adapters.
 
 *Disable ZHA or Z2M*
 
 # For Network connected coordinator:
 1. In the add-on configuration enter the IP_ADDRESS:port in the Network Device entry form
 2. Select any serial device to make the form happy
-3. Paste the link the the firmware .GBL file to be used for the update and press `Save`.
+3. Paste the link to the firmware .GBL file to be used for the update and press `Save`.
 4. Start the add-on.
 5. Monitor the flash by going to the addon log page, and refreshing periodically.
 
-# For USB Attaced Coordinator
-1. In the add-on configuratione enter some text into the Network Device entry form to kmake the form happy
+# For USB Attached Coordinator
+1. In the add-on configuration enter some text into the Network Device entry form to make the form happy
 2. Select the correct serial device from the list of devices detect, Toggle the switch to enable USB Flash
-3. Paste the link the the firmware .GBL file to be used for the update and press `Save`.
+3. Paste the link to the firmware .GBL file to be used for the update and press `Save`.
 4. Start the add-on.
 5. Monitor the flash by going to the addon log page, and refreshing periodically.
 
@@ -42,11 +42,14 @@ Add-on configuration:
 | Configuration      | Description                                            |
 |--------------------|--------------------------------------------------------|
 | device             | Serial service where the Silicon Labs radio is attached |
-| network_device     | Network Serial port (IP_ADDRESS:PORT)   
-| baudrate           | Serial port baudrate (depends on firmware)   |
-| flow_control       | If hardware flow control should be enabled (depends on firmware) |
-| firmware_url       | Custom URL to flash firmware from                      |
+| network_device     | Network Serial port (IP_ADDRESS:PORT)                  |
+| device_type        | Enable to flash a USB device instead of a network device |
+| bootloader_baudrate | Serial port baudrate used in bootloader mode (depends on firmware) |
+| firmware_url       | URL of the .gbl firmware to flash                      |
+| write_ieee         | Write a custom IEEE address (can be done without a firmware URL, but only once per adapter) |
+| ieee               | IEEE address, format `00:12:4b:aa:bb:cc:dd:ee`         |
+| verbose            | Run the flasher in verbose mode                        |
 
 ## Support
 
-
+Got questions? Open an issue at https://github.com/mercenaruss/zigstar_addons/issues

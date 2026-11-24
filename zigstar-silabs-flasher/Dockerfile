@@ -1,9 +1,7 @@
-ARG BUILD_FROM
+FROM ghcr.io/home-assistant/base-python:3.13-alpine3.22
+
 ARG BUILD_ARCH
-
-FROM $BUILD_FROM
-
-ARG UNIVERSAL_SILABS_FLASHER
+ARG UNIVERSAL_SILABS_FLASHER=0.0.13
 
 RUN \
     set -x \

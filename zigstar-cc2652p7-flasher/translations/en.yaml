@@ -21,3 +21,12 @@ configuration:
   trigger_bsl:
     name: Enable Bootloader mode for Network Device
     description: Enables the addon to trigger bootloader mode on Network Devices.Disable in case USB mode is used.
+  write_ieee:
+    name: Write a different IEEE address to a device
+    description: Enable and fill in the desired IEEE address below
+  ieee:
+    name: IEEE address
+    description: Desired IEEE address in 00:12:4b:aa:bb:cc:dd:ee format
+  baudrate:
+    name: Baudrate
+    description: Serial baudrate used to talk to the bootloader. Leave empty for the default (500000). Use 115200 for modules wired directly to a UART.

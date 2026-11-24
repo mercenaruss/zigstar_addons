@@ -55,7 +55,7 @@
       "options": [
         "zigstar-cc2652-flasher",
         "zigstar-cc2652p7-flasher",
-        "zigstar-silabs-flasher",
+        "zigstar-silabs-flasher"
       ]
     }
   ]

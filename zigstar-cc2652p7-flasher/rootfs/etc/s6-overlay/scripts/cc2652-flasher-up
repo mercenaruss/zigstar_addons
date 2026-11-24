@@ -8,11 +8,18 @@ set -e
 declare device
 declare network_device
 declare network_device_url
-declare firmware
+declare firmware_url
+declare firmware_sha256=""
+declare ieee
+declare ieee_log_suffix=""
+declare workdir
 declare exit_status
+
+workdir=$(mktemp -d)
 
 function cleanup() {
     exit_status=$?
+    rm -rf "${workdir}"
     bashio::log.info "cc2652p7-flasher-up script exited with code ${exit_status}"
     echo "${exit_status}" > /run/s6-linux-init-container-results/exitcode
 
@@ -20,13 +27,42 @@ function cleanup() {
 }
 trap cleanup EXIT
 
-function exit_no_firmware {
-    bashio::log.warning "No firmware found for the selected device, assuming firmware is installed."
-    exit 0
+# Download a firmware zip and extract it to ${workdir}/firmware.hex
+function fetch_firmware() {
+    local url="$1"
+    local sha256="${2:-}"
+
+    if [ -z "${url}" ]; then
+        bashio::log.error "No firmware selected and no firmware URL provided"
+        exit 1
+    fi
+
+    bashio::log.info "Downloading firmware from ${url}"
+    if ! curl --silent --show-error --fail --location \
+            --proto '=https' --retry 3 --max-time 120 \
+            -o "${workdir}/firmware.zip" "${url}"; then
+        bashio::log.error "Downloading firmware failed"
+        exit 1
+    fi
+
+    if [ -n "${sha256}" ]; then
+        if ! echo "${sha256}  ${workdir}/firmware.zip" | sha256sum -c - > /dev/null 2>&1; then
+            bashio::log.error "Firmware checksum mismatch, refusing to flash"
+            exit 1
+        fi
+        bashio::log.info "Firmware checksum verified"
+    fi
+
+    if ! unzip -p "${workdir}/firmware.zip" > "${workdir}/firmware.hex" \
+            || [ ! -s "${workdir}/firmware.hex" ]; then
+        bashio::log.error "Unzipping firmware failed"
+        exit 1
+    fi
 }
 
 network_device=$(bashio::config 'network_device')
-network_device_url=$(echo "$network_device" | sed 's/.\{5\}$//')
+# Strip the ":PORT" suffix to obtain the host
+network_device_url="${network_device%:*}"
 
 if bashio::config.true 'usb_mode'; then
     device=$(bashio::config 'device')
@@ -36,51 +72,40 @@ fi
 
 # Firmware choice
 if bashio::config.true 'coordinator_fw'; then
-    curl --silent -L -o "/root/firmware.zip" "https://github.com/Koenkk/Z-Stack-firmware/raw/refs/heads/master/coordinator/Z-Stack_3.x.0/bin/CC1352P7_coordinator_20240710.zip"
-    if [ ! -f "/root/firmware.zip" ]; then
-        bashio::log.warning "Downloading last zip failed"
-        exit 0
-    fi
-    unzip -p "/root/firmware.zip" > "/root/firmware.hex"
-    if [ ! -f "/root/firmware.hex" ]; then
-        bashio::log.warning "Unzip firmware.zip failed"
-        exit 0
-    fi
-    firmware="firmware.hex"
+    # Firmware hosted in the TubesZB add-on repository, pinned to a commit
+    firmware_url="https://github.com/tube0013/tubeszb_addons/raw/49776c3fd40efae08df890a2e468f8779181352c/tzb-cc2652-flasher/firmware/CC1352P7_coordinator_20250321.zip"
+    firmware_sha256="07c26a917c9702d6a42a74c706141f51ae720e67d5140bd662bcbb9875e1a047"
 elif bashio::config.true 'router_fw'; then
-    curl --silent -L -o "/root/firmware.zip" "https://github.com/mercenaruss/zigstar_gateways/raw/main/files/Firmware/CC1352P7_Router.zip"
-    if [ ! -f "/root/firmware.zip" ]; then
-        bashio::log.warning "Downloading last zip failed"
-        exit 0
-    fi
-    unzip -p "/root/firmware.zip" > "/root/firmware.hex"
-    if [ ! -f "/root/firmware.hex" ]; then
-        bashio::log.warning "Unzip firmware.zip failed"
-        exit 0
-    fi
-    firmware="firmware.hex"
+    firmware_url="https://github.com/mercenaruss/zigstar_gateways/raw/00ddb35e4cfd36ea69d3b93201f4a99546fab4e2/files/Firmware/CC1352P7_Router.zip"
+    firmware_sha256="e8932335cd716d78a9f57b87fe3786b4f52746f1a512847a9e2ac1583cc47517"
 else
-    curl --silent -L -o "/root/firmware.zip" "$(bashio::config 'firmware_url')"
-    if [ ! -f "/root/firmware.zip" ]; then
-        bashio::log.warning "Downloading firmware failed"
-        exit 0
-    fi
-
-    unzip -p "/root/firmware.zip" > "/root/firmware.hex"
-    if [ ! -f "/root/firmware.hex" ]; then
-        bashio::log.warning "Downloading firmware failed"
-        exit 0
-    fi
-
-    firmware="firmware.hex"
+    firmware_url=$(bashio::config 'firmware_url')
 fi
+
+fetch_firmware "${firmware_url}" "${firmware_sha256}"
 
 if bashio::config.true 'trigger_bsl'; then
     bashio::log.info "Triggering Bootloader mode on ${network_device_url}"
-    curl --silent -X POST http://${network_device_url}/switch/firmware_update/toggle
-    curl --silent -X POST http://${network_device_url}/button/trigger_zigbee_module_bootloader/press
+    curl --silent --show-error --fail --max-time 10 -X POST "http://${network_device_url}/switch/firmware_update/toggle"
+    curl --silent --show-error --fail --max-time 10 -X POST "http://${network_device_url}/button/trigger_zigbee_module_bootloader/press"
     sleep 5s
 fi
 
-bashio::log.info "Starting CC2652P7 flasher with ${device}"
-cc1352-flasher.py -p ${device} -evw "/root/${firmware}"
+declare -a baud_args=()
+if bashio::config.has_value 'baudrate'; then
+    baud_args=(-b "$(bashio::config 'baudrate')")
+fi
+
+declare -a ieee_args=()
+if bashio::config.true 'write_ieee'; then
+    ieee=$(bashio::config 'ieee')
+    if [[ ! "${ieee}" =~ ^([0-9A-Fa-f]{2}:){7}[0-9A-Fa-f]{2}$ ]]; then
+        bashio::log.error "Invalid IEEE address '${ieee}', expected format 00:12:4b:aa:bb:cc:dd:ee"
+        exit 1
+    fi
+    ieee_args=(--ieee-address "${ieee}")
+    ieee_log_suffix=" and IEEE address ${ieee}"
+fi
+
+bashio::log.info "Starting CC2652P7 flasher with ${device}${ieee_log_suffix}"
+cc1352-flasher.py -p "${device}" -evw "${baud_args[@]}" "${ieee_args[@]}" "${workdir}/firmware.hex"

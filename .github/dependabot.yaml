@@ -5,3 +5,31 @@ updates:
     schedule:
       interval: weekly
       time: "06:00"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: weekly
+      time: "06:00"
+
+  - package-ecosystem: "docker"
+    directory: "/zigstar-cc2652-flasher"
+    schedule:
+      interval: weekly
+      time: "06:00"
+
+  - package-ecosystem: "docker"
+    directory: "/zigstar-cc2652p7-flasher"
+    schedule:
+      interval: weekly
+      time: "06:00"
+
+  - package-ecosystem: "docker"
+    directory: "/zigstar-silabs-flasher"
+    schedule:
+      interval: weekly
+      time: "06:00"
