@@ -7,6 +7,10 @@ Add-ons for Home Assistant that allow you to easily flash new firmware on your Z
 
 [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fmercenaruss%2Fzigstar_addons)
 
+## Supported architectures
+
+The add-ons are built for `amd64` and `aarch64`. The deprecated `armhf`, `armv7` and `i386` architectures are no longer supported.
+
 ## Add-ons
 
 This repository contains the following add-ons:

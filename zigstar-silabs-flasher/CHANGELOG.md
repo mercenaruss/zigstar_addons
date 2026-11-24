@@ -8,7 +8,8 @@
 - Add Russian and Ukrainian translations
 - Mark add-on as stable
 - Add AppArmor profile
-- Move base image into the Dockerfile and drop deprecated architectures (armhf, armv7, i386)
+- **Breaking:** the `armhf`, `armv7` and `i386` architectures are no longer supported; only `amd64` and `aarch64` are built
+- Move base image into the Dockerfile
 - Fix repository links (`main` branch) and documentation
 - Remove unused `flow_control` option and fix `firmware_url` default
 - Fix `BUILD_ARCH` build argument in Dockerfile
