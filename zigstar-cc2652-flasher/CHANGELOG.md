@@ -9,6 +9,7 @@
 - Use firmware from the TubesZB repository (20250321 builds, pinned commit) with SHA256 verification
 - Mark add-on as stable
 - Add AppArmor profile
+- Move base image into the Dockerfile and drop deprecated architectures (armhf, armv7, i386)
 - Fix repository links (`main` branch) and documentation
 
 ## 0.4.1

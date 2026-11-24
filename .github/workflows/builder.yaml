@@ -1,8 +1,7 @@
 name: Builder
 
 env:
-  BUILD_ARGS: "--test"
-  MONITORED_FILES: "build.yaml config.yaml Dockerfile rootfs"
+  MONITORED_FILES: "config.yaml Dockerfile rootfs"
 
 permissions:
   contents: read
@@ -20,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Initialize builds
     outputs:
-      changed_addons: ${{ steps.changed_addons.outputs.addons }}
+      matrix: ${{ steps.changed_addons.outputs.matrix }}
       changed: ${{ steps.changed_addons.outputs.changed }}
     steps:
       - name: Check out the repository
@@ -57,92 +56,81 @@ jobs:
         env:
           ADDONS: ${{ steps.addons.outputs.addons }}
           CHANGED_FILES: ${{ steps.changed_files.outputs.all }}
+          OWNER: ${{ github.repository_owner }}
         run: |
           changed_addons=()
           for addon in ${ADDONS}; do
             for file in ${MONITORED_FILES}; do
               # Match whole path components so one add-on name cannot match another
               if [[ "${CHANGED_FILES}" =~ (^|[[:space:]])${addon}/${file}([/[:space:]]|$) ]]; then
-                changed_addons+=("\"${addon}\"")
+                changed_addons+=("${addon}")
                 break
               fi
             done
           done
 
           if [[ ${#changed_addons[@]} -gt 0 ]]; then
-            changed=$(IFS=,; echo "${changed_addons[*]}")
-            echo "Changed add-ons: ${changed}"
+            echo "Changed add-ons: ${changed_addons[*]}"
+            owner="${OWNER,,}"
+            matrix='{"include":[]}'
+            for addon in "${changed_addons[@]}"; do
+              for arch in amd64 aarch64; do
+                case "${arch}" in
+                  amd64) os="ubuntu-24.04" ;;
+                  aarch64) os="ubuntu-24.04-arm" ;;
+                esac
+                matrix=$(jq -c --arg addon "${addon}" --arg arch "${arch}" --arg os "${os}" \
+                  --arg image "ghcr.io/${owner}/${arch}-addon-${addon}" \
+                  '.include += [{addon: $addon, arch: $arch, os: $os, image: $image}]' <<< "${matrix}")
+              done
+            done
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "addons=[${changed}]" >> "$GITHUB_OUTPUT"
+            echo "matrix=${matrix}" >> "$GITHUB_OUTPUT"
           else
             echo "No add-on had any monitored files changed (${MONITORED_FILES})"
           fi
 
   build:
     needs: init
-    runs-on: ubuntu-latest
     if: needs.init.outputs.changed == 'true'
+    runs-on: ${{ matrix.os }}
     name: Build ${{ matrix.arch }} ${{ matrix.addon }} add-on
     strategy:
-      matrix:
-        addon: ${{ fromJson(needs.init.outputs.changed_addons) }}
-        arch: ["aarch64", "amd64", "armhf", "armv7", "i386"]
+      fail-fast: false
+      matrix: ${{ fromJson(needs.init.outputs.matrix) }}
     permissions:
       contents: read
       packages: write
+      id-token: write # needed for Cosign signing when publishing
 
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Get information
-        id: info
-        uses: home-assistant/actions/helpers/info@9e9565e68f5a70d874202871f4c4064d23814235 # master
-        with:
-          path: "./${{ matrix.addon }}"
-
-      - name: Check if add-on should be built
-        id: check
+      - name: Get add-on version
+        id: version
         env:
-          IMAGE: ${{ steps.info.outputs.image }}
-          ARCHITECTURES: ${{ steps.info.outputs.architectures }}
-          ARCH: ${{ matrix.arch }}
           ADDON: ${{ matrix.addon }}
-          HEAD_REF: ${{ github.head_ref }}
-          EVENT_NAME: ${{ github.event_name }}
         run: |
-          # The info action returns the value with its YAML quotes; drop them
-          IMAGE="${IMAGE//\"/}"
-          if [[ "${IMAGE}" == "null" ]]; then
-            echo "Image property is not defined, skipping build"
-            echo "build_arch=false" >> "$GITHUB_OUTPUT"
-          elif [[ "${ARCHITECTURES}" =~ ${ARCH} ]]; then
-            echo "build_arch=true" >> "$GITHUB_OUTPUT"
-            echo "image=$(echo "${IMAGE}" | cut -d'/' -f3)" >> "$GITHUB_OUTPUT"
-            if [[ -z "${HEAD_REF}" ]] && [[ "${EVENT_NAME}" == "push" ]]; then
-              echo "BUILD_ARGS=" >> "$GITHUB_ENV"
-            fi
-          else
-            echo "${ARCH} is not a valid arch for ${ADDON}, skipping build"
-            echo "build_arch=false" >> "$GITHUB_OUTPUT"
+          version=$(sed -n 's/^version: *//p' "${ADDON}/config.yaml" | head -n1 | tr -d "\"' ")
+          if [[ -z "${version}" ]]; then
+            echo "::error::Could not read version from ${ADDON}/config.yaml"
+            exit 1
           fi
-
-      - name: Login to GitHub Container Registry
-        if: env.BUILD_ARGS != '--test'
-        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550 # v4.8.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
 
       - name: Build ${{ matrix.addon }} add-on
-        if: steps.check.outputs.build_arch == 'true'
-        uses: home-assistant/builder@2024.08.2 # tag, not SHA: the action derives its image tag from this ref
+        uses: home-assistant/builder/actions/build-image@7412f0023ea9b6e58e8bb5059f1660f51376f49a # 2026.09.0
         with:
-          args: |
-            ${{ env.BUILD_ARGS }} \
-            --${{ matrix.arch }} \
-            --target /data/${{ matrix.addon }} \
-            --image "${{ steps.check.outputs.image }}" \
-            --docker-hub "ghcr.io/${{ github.repository_owner }}" \
-            --addon
+          arch: ${{ matrix.arch }}
+          context: ./${{ matrix.addon }}
+          image: ${{ matrix.image }}
+          image-tags: |
+            ${{ steps.version.outputs.version }}
+            latest
+          version: ${{ steps.version.outputs.version }}
+          cache-gha-scope: ${{ matrix.addon }}-${{ matrix.arch }}
+          container-registry-password: ${{ secrets.GITHUB_TOKEN }}
+          # Only publish and sign from pushes to main; pull requests just build
+          push: ${{ github.event_name == 'push' }}
+          cosign: ${{ github.event_name == 'push' }}
